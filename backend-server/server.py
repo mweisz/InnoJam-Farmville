@@ -66,7 +66,10 @@ def connect():
 def getDataFromDb(sql, params):
 	con = connect()
 	cur = con.cursor()
-	cur.execute(sql, params)
+	if params:
+		cur.execute(sql, params)
+	else:
+		cur.execute(sql)
 	columns = [desc[0] for desc in cur.description]
 	result = []
 	for row in cur.fetchall():
@@ -74,11 +77,28 @@ def getDataFromDb(sql, params):
 		result.append(row)
 	return result
 
+@app.route('/innojam/fields')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def getAllFields():
+	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD"
+	result = getDataFromDb(sql, None)
+	
+	return Response(json.dumps(result),  mimetype='application/json')
+
 @app.route('/innojam/field')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getField():
 	fieldID = request.args.get('fieldId', '')
 	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = ?"
+	result = getDataFromDb(sql, (fieldID))
+	
+	return Response(json.dumps(result[0]),  mimetype='application/json')
+
+@app.route('/innojam/plantInField')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def getPlantInField():
+	fieldID = request.args.get('fieldId', '')
+	sql = "SELECT FIELDID, PLANT FROM FARMVILLE.EVENTS WHERE FIELDID = ?"
 	result = getDataFromDb(sql, (fieldID))
 	
 	return Response(json.dumps(result[0]),  mimetype='application/json')
