@@ -43,13 +43,13 @@ function getFields() {
 }
 
 function getField(fieldId) {
-    var url = ENDPOINT_FIELD + "?fieldId=" + fieldId + "/";
+    var url = ENDPOINT_FIELD + "?fieldId=" + fieldId;
     var result = httpGet(url);
     field = JSON.parse(result);
 }
 
 function getPlantInField(fieldId, plant) {
-    var url = ENDPOINT_PLANT_IN_FIELD + "?fieldId=" fieldId + "&plant=" + plant + "/";
+    var url = ENDPOINT_PLANT_IN_FIELD + "?fieldId=" + fieldId + "&plant=" + plant;
     var result = httpGet(url);
     plantInField = JSON.parse(result);
 }
@@ -86,27 +86,27 @@ function harvestField(fieldId){
 
 // Sensor Data
 function getTemperature(fieldId) {
-    var url = ENDPOINT_TEMPERATURE + "?fieldId=" + fieldId + "/";
+    var url = ENDPOINT_TEMPERATURE + "?fieldId=" + fieldId;
     var result = httpGet(url);
     temperature = JSON.parse(result);
 }
 
 
 function getWettness(fieldId){
-    var url = ENDPOINT_WETTNESS + "?fieldId=" + fieldId + "/";
+    var url = ENDPOINT_WETTNESS + "?fieldId=" + fieldId;
     var result = httpGet(url);
     wettness = JSON.parse(result);
 }
 
 function getBrightness(fieldId){
-    var url = ENDPOINT_BRIGHTNESS + "?fieldId=" + fieldId + "/";
+    var url = ENDPOINT_BRIGHTNESS + "?fieldId=" + fieldId;
     var result = httpGet(url);
     brightness = JSON.parse(result);
 }
 
 
 function getPhoto(fieldId){
-    var url = ENDPOINT_PHOTO + "?fieldId=" + fieldId + "/";
+    var url = ENDPOINT_PHOTO + "?fieldId=" + fieldId;
     var result = httpGet(url);
     photo = JSON.parse(result);
 }
