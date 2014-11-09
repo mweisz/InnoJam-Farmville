@@ -12,8 +12,6 @@ window.onload = function() {
 
 function init() {
 	console.log("Initializing");
-	animateContent();
-	initImages();
 }
 
 function animateContent() {
