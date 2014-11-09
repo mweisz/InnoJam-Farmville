@@ -63,19 +63,23 @@ def connect():
         [url, HANA.USER, HANA.PASSWORD],
         'ngdbc.jar')
 
-@app.route('/innojam/field')
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def getField():
-	fieldID = request.args.get('fieldId', '')
-	print "Get fieldId = " + str(fieldID)
+def getDataFromDb(sql, params):
 	con = connect()
 	cur = con.cursor()
-	cur.execute("SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = ?", (fieldID))
+	cur.execute(sql, params)
 	columns = [desc[0] for desc in cur.description]
 	result = []
 	for row in cur.fetchall():
 		row = dict(zip(columns, row))
 		result.append(row)
+	return result
+
+@app.route('/innojam/field')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def getField():
+	fieldID = request.args.get('fieldId', '')
+	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = ?"
+	result = getDataFromDb(sql, (fieldID))
 	
 	return Response(json.dumps(result[0]),  mimetype='application/json')
 
