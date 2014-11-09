@@ -147,11 +147,6 @@ def getWettness():
 	result = getDataFromDb(sql, fieldID)
 	return Response(json.dumps(result),  mimetype='application/json')
 
-@app.route('/innojam/harvestField', methods=['POST'])
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def harvestField():
-	return "harvestField"
-
 @app.route('/innojam/waterField', methods=['POST'])
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def waterField():
