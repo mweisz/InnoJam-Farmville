@@ -29,7 +29,7 @@ def disconnect(connection):
 # 	print row
 
 
-@app.route('/innojam/field', methods=['POST'])
+@app.route('/innojam/field')
 def getField():
 	fieldID = request.args.get('fieldId', '')
 	print fieldID
