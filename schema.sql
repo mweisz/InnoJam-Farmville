@@ -20,6 +20,8 @@ INSERT INTO events VALUES (3, 1, 'Lettuce', 'Water', '2014-11-08 15:40:0.0', 100
 INSERT INTO events VALUES (3, 1, 'Lettuce', 'Temperature', '2014-11-08 15:40:0.0', 16.5);
 INSERT INTO events VALUES (3, 1, 'Lettuce', 'Temperature', '2014-11-08 15:42:0.0', 16.7);
 INSERT INTO events VALUES (3, 1, 'Lettuce', 'Temperature', '2014-11-08 15:44:0.0', 16.9);
+INSERT INTO events VALUES (3, 1, 'Lettuce', 'Light', '2014-11-08 15:44:0.0', 1);
+INSERT INTO events VALUES (3, 1, 'Lettuce', 'Light', '2014-11-08 15:44:0.0', 0);
 
 -- supported event types
 DROP TABLE event_type;
@@ -34,3 +36,9 @@ DROP TABLE field;
 CREATE COLUMN TABLE field (id INTEGER, x INTEGER, y INTEGER);
 
 INSERT INTO field VALUES (1, 1, 1);
+
+-- light status table for Arduino
+DROP TABLE light;
+CREATE COLUMN TABLE light (ison INTEGER);
+
+INSERT INTO light VALUES (0);

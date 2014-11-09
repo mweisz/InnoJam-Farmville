@@ -8,34 +8,12 @@
 		<link href="main.css" rel="stylesheet" type="text/css" />
 		<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
 
-		<script src="main.js"></script>
+		
 		<script src="data.js"></script>
+		<script src="main.js"></script>
 	</head>
 
 	<body>
-		<header>
-			<div id="header_container">
-				<div id="header_banner">
-					<div id="header_logo">
-						&nbsp;
-					</div>
-				</div>
-				<menu>
-					<div class="seperator">
-						&nbsp;
-					</div>
-					<div id="menu_container">
-						<div id="menu_button">
-							Menu item
-						</div>
-					</div>
-					<div class="seperator">
-						&nbsp;
-					</div>
-				</menu>
-			</div>		
-		</header>
-		
 		<main>
 			<div id="content">
 				<div id="content_fields">
@@ -46,7 +24,7 @@
 						
 						<div class="row">
 							<div id="field_0" class="field">
-								<div class="image">
+								<div class="image" style="background-image: url('media/ic_tomato_plant.png');">
 									&nbsp;
 								</div>
 							</div>
@@ -106,48 +84,48 @@
 						&nbsp;
 					</div>
 					<div id="actions">
-						<div class="action_item">
-							<div class="icon">
+						<div class="action_item" id="action_lights">
+							<div class="icon" style="background-image: url('media/ic_light_on.png');">
 								&nbsp;
 							</div>
 							<div class="text">
-								Some random action
+								Turn lights on
 							</div>
 						</div>
 						<div class="seperator">
 							&nbsp;
 						</div>
 
-						<div class="action_item">
-							<div class="icon">
+						<div class="action_item" id="action_fertilize">
+							<div class="icon" style="background-image: url('media/ic_fertilizer.png');">
 								&nbsp;
 							</div>
 							<div class="text">
-								Some random action
+								Fertilize
 							</div>
 						</div>
 						<div class="seperator">
 							&nbsp;
 						</div>
 
-						<div class="action_item">
-							<div class="icon">
+						<div class="action_item" id="action_water">
+							<div class="icon" style="background-image: url('media/ic_water.png');">
 								&nbsp;
 							</div>
 							<div class="text">
-								Some random action
+								Water
 							</div>
 						</div>
 						<div class="seperator">
 							&nbsp;
 						</div>
 
-						<div class="action_item">
-							<div class="icon">
+						<div class="action_item" id="action_harvest">
+							<div class="icon" style="background-image: url('media/ic_harvest.png');">
 								&nbsp;
 							</div>
 							<div class="text">
-								Some random action
+								Harvest
 							</div>
 						</div>
 						<div class="seperator">
@@ -157,6 +135,30 @@
 				</div>
 			</div>
 		</main>
+
+		<header>
+			<div id="header_container">
+				<div id="header_banner">
+					<div id="header_logo">
+						&nbsp;
+					</div>
+				</div>
+				<menu id="menu">
+					<div class="seperator">
+						&nbsp;
+					</div>
+					<div id="menu_container">
+						<div id="menu_button">
+							Menu item
+						</div>
+					</div>
+					<div class="seperator">
+						&nbsp;
+					</div>
+				</menu>
+			</div>		
+		</header>
+
 		<div class="preload">
 			<img src="media/plant_asdf.jpg" />
 		</div>

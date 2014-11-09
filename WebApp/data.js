@@ -21,7 +21,7 @@ var ENDPOINT_PHOTO = API_ENDPOINT + "photo";
 // Stuff
 var ENDPOINT_ALL_AVAILABLE_PLANTS = API_ENDPOINT + "allAvailablePlants";
 
-
+var DEFAULT_FIELD_ID = 1;
 
 var allFields;
 var field;
