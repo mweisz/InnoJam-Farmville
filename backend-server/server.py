@@ -47,6 +47,7 @@ import jaydebeapi
 import os
 import json
 from flask import Flask, request, Response
+import urllib2
 app = Flask(__name__)
 
 class HANA:
@@ -150,16 +151,6 @@ def getWettness():
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def harvestField():
 	return "harvestField"
-
-@app.route('/innojam/turnLightsOff', methods=['POST'])
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def turnLightsOff():
-	return "TurnLightsOff"
-
-@app.route('/innojam/turnLightsOn', methods=['POST'])
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def turnLightsOn():
-	return "TurnLightsOn"
 
 @app.route('/innojam/waterField', methods=['POST'])
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
