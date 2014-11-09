@@ -1,7 +1,6 @@
 from datetime import timedelta
-import jaydebeapi
-import os
-import json
+from flask import make_response, request, current_app
+from functools import update_wrapper
 
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
@@ -44,8 +43,10 @@ def crossdomain(origin=None, methods=None, headers=None,
         return update_wrapper(wrapped_function, f)
     return decorator
 
+import jaydebeapi
+import os
+import json
 from flask import Flask, request, Response
-from functools import update_wrapper
 app = Flask(__name__)
 
 class HANA:
