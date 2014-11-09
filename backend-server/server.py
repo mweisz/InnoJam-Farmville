@@ -78,11 +78,6 @@ def getDataFromDb(sql, params):
 		result.append(row)
 	return result
 
-@app.route('/innojam/fertilizeField', methods=['POST'])
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def fertilizeField():
-	return "FertilizeField"
-
 @app.route('/innojam/fields')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getAllFields():
