@@ -45,6 +45,7 @@ def crossdomain(origin=None, methods=None, headers=None,
 
 import jaydebeapi
 import os
+import datetime
 import json
 from flask import Flask, request, Response
 import urllib2
@@ -77,6 +78,14 @@ def getDataFromDb(sql, params):
 		row = dict(zip(columns, row))
 		result.append(row)
 	return result
+
+def transactionDB(sql, params):
+	con = connect()
+	cur = con.cursor()
+	if params:
+		cur.execute(sql, params)
+	else:
+		cur.execute(sql)
 
 @app.route('/innojam/fields')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
@@ -130,7 +139,7 @@ def getPlantInField():
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getTemperature():
 	fieldID = request.args.get('fieldId', '')
-	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.PLANTS WHERE FIELDID = ? AND EVENT = 'Temperature'"
+	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = ? AND EVENT = 'Temperature'"
 	result = getDataFromDb(sql, fieldID)
 	return Response(json.dumps(result),  mimetype='application/json')
 
@@ -141,6 +150,26 @@ def getWettness():
 	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.PLANTS WHERE FIELDID = ? AND EVENT = 'Water'"
 	result = getDataFromDb(sql, fieldID)
 	return Response(json.dumps(result),  mimetype='application/json')
+
+@app.route('/innojam/turnLightsOff')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def turnLightsOff():
+	sql = "UPDATE FARMVILLE.LIGHT SET ISON = 0"
+	transactionDB(sql, None)
+	values = (4, 1, 'Lettuce', 'Light', str(datetime.datetime.now()), 0)
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(?,?,?,?,?,?)"
+	transactionDB(sql, values)
+	return "Turned lights off"
+
+@app.route('/innojam/turnLightsOn')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def turnLightsOn():
+	sql = "UPDATE FARMVILLE.LIGHT SET ISON = 1"
+	transactionDB(sql, None)
+	values = (4, 1, 'Lettuce', 'Light', str(datetime.datetime.now()), 1)
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(?,?,?,?,?,?)"
+	transactionDB(sql, values)
+	return "Turned lights on"
 
 @app.route('/innojam/waterField', methods=['POST'])
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
