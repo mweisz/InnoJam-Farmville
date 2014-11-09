@@ -85,6 +85,14 @@ def getAllFields():
 	
 	return Response(json.dumps(result),  mimetype='application/json')
 
+@app.route('/innojam/allAvailablePlants')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def getAvailablePlants():
+	sql = "SELECT ID, NAME FROM FARMVILLE.PLANTS"
+	result = getDataFromDb(sql, None)
+	
+	return Response(json.dumps(result),  mimetype='application/json')
+
 @app.route('/innojam/field')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getField():
