@@ -66,6 +66,8 @@ def connect():
         'ngdbc.jar')
 
 def getDataFromDb(sql, params):
+	print sql
+	print params
 	con = connect()
 	cur = con.cursor()
 	if params:
@@ -140,7 +142,7 @@ def getPlantInField():
 def getTemperature():
 	fieldID = request.args.get('fieldId', '')
 	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = ? AND EVENT = 'Temperature'"
-	result = getDataFromDb(sql, fieldID)
+	result = getDataFromDb(sql, (fieldID))
 	return Response(json.dumps(result),  mimetype='application/json')
 
 @app.route('/innojam/wettness')
