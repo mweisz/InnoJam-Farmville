@@ -16,6 +16,10 @@ function init() {
 	
 	showOverview();
 
+	setClickListeners();
+}
+
+function setClickListeners() {
 	overviewContainer.onclick = function() {
 	    showDetails();
 	}
@@ -23,6 +27,23 @@ function init() {
 	headerContainer.onclick = function() {
 	    showOverview();
 	}
+
+	document.getElementById("action_lights").onclick = function() {
+	    turnLightsOn();
+	}
+	
+	document.getElementById("action_fertilize").onclick = function() {
+	    fertilizeField();
+	}
+	
+	document.getElementById("action_water").onclick = function() {
+	    waterField();
+	}
+	
+	document.getElementById("action_harvest").onclick = function() {
+	    harvestField();
+	}
+	
 }
 
 function animateContent() {
