@@ -21,6 +21,7 @@ def connect():
         'ngdbc.jar')
 
 @app.route('/innojam/field')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getField():
 	fieldID = request.args.get('fieldId', '')
 	print "Get fieldId = " + str(fieldID)
