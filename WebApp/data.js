@@ -28,6 +28,7 @@ var field;
 var plantInField;
 
 var temperature;
+var temperature_array;
 var wettness;
 var brightness;
 var photo;
@@ -89,6 +90,13 @@ function getTemperature(fieldId) {
     var url = ENDPOINT_TEMPERATURE + "?fieldId=" + fieldId;
     var result = httpGet(url);
     temperature = JSON.parse(result);
+
+
+
+    for(var i = 0; i < temperature.length(); i++){
+        temperature_array.add(temperature[i].value);
+    }
+
 }
 
 
