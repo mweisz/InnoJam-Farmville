@@ -1,38 +1,39 @@
 import jaydebeapi
 import os
+import json
 
-from flask import Flask, request
+from flask import Flask, request, Response
+from functools import update_wrapper
 app = Flask(__name__)
 
-host = "23.23.134.136"
-port = 30015
-user = "CODEJAMMER"
-password = "CodeJam2014"
+class HANA:
+    HOST = '23.23.134.136'
+    PASSWORD = 'CodeJam2014'
+    PORT = 30015
+    USER = 'CODEJAMMER'
 
-def connect(host, port, user, password):
-    url = 'jdbc:sap://%s:%s' %(host, port)
+url = 'jdbc:sap://%s:%s' %(HANA.HOST, HANA.PORT)
+
+def connect():
     return jaydebeapi.connect(
         'com.sap.db.jdbc.Driver',
-        [url, user, password],
+        [url, HANA.USER, HANA.PASSWORD],
         'ngdbc.jar')
-
-def disconnect(connection):
-    connection.close()
-
-# connection = connect(host, port, user, password)
-
-# cursor = connection.cursor()
-
-# cursor.execute("SELECT * FROM FARMVILLE.PLANTS")
-
-# for row in cursor.fetchall():
-# 	print row
-
 
 @app.route('/innojam/field')
 def getField():
 	fieldID = request.args.get('fieldId', '')
-	print fieldID
+	print "Get fieldId = " + str(fieldID)
+	con = connect()
+	cur = con.cursor()
+	cur.execute("SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = ?", (fieldID))
+	columns = [desc[0] for desc in cur.description]
+	result = []
+	for row in cur.fetchall():
+		row = dict(zip(columns, row))
+		result.append(row)
+	
+	return Response(json.dumps(result[0]),  mimetype='application/json')
 
 
 
