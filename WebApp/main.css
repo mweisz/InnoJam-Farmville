@@ -1,7 +1,6 @@
 @charset "utf-8";
 * {
 	font-family: 'Roboto', sans-serif;
-	color: #666;
 }
 
 a {
@@ -40,14 +39,29 @@ header {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
+
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100px;
+}
+
+#content {
+	margin-top: 100px;
+	opacity: 1;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	transition: all 1s ease;
 }
 
 #header_container {
 	position: relative;
-	top: 0px;
-	left: 0px;
-	right: 0px;
 	text-align: center;
+	height: 100%;
 	-webkit-transition: all 1s ease;
 	-moz-transition: all 1s ease;
 	-o-transition: all 1s ease;
@@ -57,7 +71,7 @@ header {
 
 #header_banner {
 	width: 100%;
-	height: 100px;
+	height: 100%;
 }
 
 #header_logo {
@@ -70,14 +84,19 @@ header {
 }
 
 #menu_container {
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: rgba(0, 0, 0, 0.7);
 	padding: 10px;
+	color: #FFF;
 }
 
 .seperator {
 	width: 100%;
 	height: 2px;
-	background-color: #999;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+#content_fields {
+	display: none;
 }
 
 #field_list_start, #field_list, #field_list_end {
@@ -127,24 +146,65 @@ header {
 	height: 90%;
 	margin: 0 auto;
 	background-color: rgba(255, 255, 255, 0.3);
-	background-image: url("media/ic_add_white.png");
+	background-image: url("media/ic_add_plant.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
 }
 
 
+#content_detail {
 
-
-
-#content {
-	opacity: 1;
-	-webkit-transition: all 1s ease;
-	-moz-transition: all 1s ease;
-	-o-transition: all 1s ease;
-	-ms-transition: all 1s ease;
-	transition: all 1s ease;
 }
+
+#content_detail #photo {
+	width: 100%;
+	height: 250px;
+	background-color: rgba(255, 255, 255, 0.3);
+	background-image: url("media/photo_tomato.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+#content_detail #stats {
+	padding: 10px;
+}
+
+#content_detail #actions {
+
+}
+
+#actions .action_item {
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	height: 40px;
+	overflow: hidden;
+}
+
+.action_item .icon {
+	position: relative;
+	left: 0px;
+	width: 40px;
+	height: 100%;
+	background-color: #FFF;
+	float: left;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	background-image: url("media/ic_globe.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.action_item .text {
+	position: relative;
+	left: 60px;
+	height: 100%;
+	font-size: 20px;
+	line-height: 40px;
+}
+
 
 .image_container {
 	position: relative;
