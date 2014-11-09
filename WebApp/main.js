@@ -1,6 +1,10 @@
+
 var overviewContainer;
 var detailsContainer;
+var plantSelectorContainer;
 var headerContainer;
+
+var hasSelectedPlant = false;
 
 window.onload = function() {
 	init();
@@ -12,6 +16,7 @@ function init() {
 
 	overviewContainer = document.getElementById("content_fields");
 	detailsContainer = document.getElementById("content_detail");
+	plantSelectorContainer = document.getElementById("content_select_plant");
 	headerContainer = document.getElementById("header_container");
 	
 	showOverview();
@@ -21,11 +26,21 @@ function init() {
 
 function setClickListeners() {
 	overviewContainer.onclick = function() {
-	    showDetails();
+		if (hasSelectedPlant) {
+			showDetails();
+		} else {
+			showPlantSelector();
+		}
 	}
 
 	headerContainer.onclick = function() {
 	    showOverview();
+	}
+
+	plantSelectorContainer.onclick = function() {
+		hasSelectedPlant = true;
+		hidePlantSelector();
+	    document.getElementById("field_0").children[0].style.backgroundImage = "url('media/ic_tomato_plant.png')";
 	}
 
 	document.getElementById("action_lights").onclick = function() {
@@ -64,4 +79,12 @@ function showOverview() {
 function showDetails() {
 	overviewContainer.style.display = "none";
 	detailsContainer.style.display = "block";
+}
+
+function showPlantSelector() {
+	plantSelectorContainer.style.top = "190px";
+}
+
+function hidePlantSelector() {
+	plantSelectorContainer.style.top = "-500px";
 }
