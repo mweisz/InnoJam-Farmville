@@ -1,6 +1,7 @@
 @charset "utf-8";
 * {
 	font-family: 'Roboto', sans-serif;
+	cursor: default;
 }
 
 a {
@@ -154,8 +155,7 @@ header {
 	width: 90%;
 	height: 90%;
 	margin: 0 auto;
-	background-color: rgba(255, 255, 255, 0.3);
-	background-image: url("media/ic_add_plant.png");
+	background-image: url("media/ic_add_plant_light.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
