@@ -215,6 +215,58 @@ header {
 }
 
 
+
+#content_select_plant {
+	position: absolute;
+	top: -500px;
+	left: 50px;
+	right: 50px;
+	height: 410px;
+	background-color: rgba(255, 255, 255, 0.9);
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#content_select_plant #plants {
+	
+}
+
+#plants .plants_item {
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	height: 60px;
+	overflow: hidden;
+}
+
+.plants_item .icon {
+	position: relative;
+	left: 0px;
+	width: 100px;
+	height: 100%;
+	background-color: #FFF;
+	float: left;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	background-image: url("media/ic_globe.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.plants_item .text {
+	position: relative;
+	left: 30px;
+	height: 100%;
+	font-size: 20px;
+	line-height: 60px;
+}
+
+
 .image_container {
 	position: relative;
 	left: 0px;
