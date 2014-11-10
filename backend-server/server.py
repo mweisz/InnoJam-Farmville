@@ -49,58 +49,35 @@ import datetime
 import json
 from flask import Flask, request, Response
 import urllib2
+import requests
 app = Flask(__name__)
 
-class HANA:
-    HOST = '23.23.134.136'
-    PASSWORD = 'CodeJam2014'
-    PORT = 30015
-    USER = 'CODEJAMMER'
+HANA_URL = "http://54.77.126.96:5005"
 
-url = 'jdbc:sap://%s:%s' %(HANA.HOST, HANA.PORT)
+def dbRequest(sql):
+	payload = {'query': sql}
+	result = requests.get(HANA_URL, params=payload)
+	return result.json()
 
-def connect():
-    return jaydebeapi.connect(
-        'com.sap.db.jdbc.Driver',
-        [url, HANA.USER, HANA.PASSWORD],
-        'ngdbc.jar')
-
-def getDataFromDb(sql, params):
-	print sql
-	print params
-	con = connect()
-	cur = con.cursor()
-	if params:
-		cur.execute(sql, params)
-	else:
-		cur.execute(sql)
-	columns = [desc[0] for desc in cur.description]
-	result = []
-	for row in cur.fetchall():
-		row = dict(zip(columns, row))
-		result.append(row)
-	return result
-
-def transactionDB(sql, params):
-	con = connect()
-	cur = con.cursor()
-	if params:
-		cur.execute(sql, params)
-	else:
-		cur.execute(sql)
+def dbPost(sql):
+	payload = {'query': sql}
+	try:
+		requests.get(HANA_URL, params=payload)
+	except:
+		print "As expected"
 
 @app.route('/innojam/fields')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getAllFields():
 	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD"
-	result = getDataFromDb(sql, None)
+	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
 @app.route('/innojam/allAvailablePlants')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getAvailablePlants():
 	sql = "SELECT ID, NAME FROM FARMVILLE.PLANTS"
-	result = getDataFromDb(sql, None)
+	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
 @app.route('/innojam/brightness')
@@ -116,8 +93,8 @@ def getBrightness():
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getField():
 	fieldID = request.args.get('fieldId', '')
-	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = ?"
-	result = getDataFromDb(sql, (fieldID))
+	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = " + str(fieldID)
+	result = dbRequest(sql)
 	return Response(json.dumps(result[0]),  mimetype='application/json')
 
 @app.route('/innojam/photo')
@@ -133,44 +110,52 @@ def getPhoto():
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getPlantInField():
 	fieldID = request.args.get('fieldId', '')
-	sql = "SELECT FIELDID, PLANT FROM FARMVILLE.EVENTS WHERE FIELDID = ?"
-	result = getDataFromDb(sql, (fieldID))
+	sql = "SELECT FIELDID, PLANT FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID)
+	result = dbRequest(sql)
 	return Response(json.dumps(result[0]),  mimetype='application/json')
 
 @app.route('/innojam/temperature')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getTemperature():
 	fieldID = request.args.get('fieldId', '')
-	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = ? AND EVENT = 'Temperature'"
-	result = getDataFromDb(sql, (fieldID))
+	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature' ORDER BY TIME DESC LIMIT 1"
+	print sql
+	result = dbRequest(sql)
+	return Response(json.dumps(result),  mimetype='application/json')
+
+@app.route('/innojam/temperatures')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def getTemperatures():
+	fieldID = request.args.get('fieldId', '')
+	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature'"
+	print sql
+	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
 @app.route('/innojam/wettness')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getWettness():
 	fieldID = request.args.get('fieldId', '')
-	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.PLANTS WHERE FIELDID = ? AND EVENT = 'Water'"
-	result = getDataFromDb(sql, fieldID)
+	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Water'"
+	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
 @app.route('/innojam/turnLightsOff')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def turnLightsOff():
 	sql = "UPDATE FARMVILLE.LIGHT SET ISON = 0"
-	transactionDB(sql, None)
-	values = (4, 1, 'Lettuce', 'Light', str(datetime.datetime.now()), 0)
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(?,?,?,?,?,?)"
-	transactionDB(sql, values)
+	dbPost(sql)
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light'," + str(datetime.datetime.now()) + ",0)"
+	dbPost(sql)
 	return "Turned lights off"
 
 @app.route('/innojam/turnLightsOn')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def turnLightsOn():
 	sql = "UPDATE FARMVILLE.LIGHT SET ISON = 1"
-	transactionDB(sql, None)
-	values = (4, 1, 'Lettuce', 'Light', str(datetime.datetime.now()), 1)
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(?,?,?,?,?,?)"
-	transactionDB(sql, values)
+	dbPost(sql)
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light'," + str(datetime.datetime.now()) + ",1)"
+	dbPost(sql)
 	return "Turned lights on"
 
 @app.route('/innojam/waterField', methods=['POST'])
