@@ -28,7 +28,7 @@ var field;
 var plantInField;
 
 var temperature;
-var temperature_array;
+var temperature_array = [20,20,21,20,20 ,22,21,21,21,20];
 var wettness;
 var brightness;
 var photo;

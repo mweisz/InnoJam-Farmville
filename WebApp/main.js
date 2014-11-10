@@ -3,6 +3,7 @@ var overviewContainer;
 var detailsContainer;
 var plantSelectorContainer;
 var headerContainer;
+var statsContainer;
 
 var hasSelectedPlant = false;
 
@@ -18,10 +19,19 @@ function init() {
 	detailsContainer = document.getElementById("content_detail");
 	plantSelectorContainer = document.getElementById("content_select_plant");
 	headerContainer = document.getElementById("header_container");
+	statsContainer = document.getElementById("stats");
 	
 	showOverview();
 
 	setClickListeners();
+
+	updateCharts();
+
+	debug();
+}
+
+function debug() {
+	showDetails();
 }
 
 function setClickListeners() {
@@ -45,18 +55,31 @@ function setClickListeners() {
 
 	document.getElementById("action_lights").onclick = function() {
 	    turnLightsOn();
+		highlightClick(document.getElementById("action_lights").children[0]);
 	}
 	
 	document.getElementById("action_fertilize").onclick = function() {
 	    fertilizeField();
+	    highlightClick(document.getElementById("action_fertilize").children[0]);
 	}
 	
 	document.getElementById("action_water").onclick = function() {
 	    waterField();
+	    highlightClick(document.getElementById("action_water").children[0]);
 	}
 	
 	document.getElementById("action_harvest").onclick = function() {
 	    harvestField();
+	    highlightClick(document.getElementById("action_harvest").children[0]);
+	}
+
+	document.getElementById("action_stats").onclick = function() {
+		highlightClick(document.getElementById("action_stats").children[0]);
+	    if (statsContainer.offsetHeight < 100) {
+	    	statsContainer.style.height = "200px";
+	    } else {
+	    	statsContainer.style.height = "0px";
+	    }
 	}
 	
 }
@@ -79,6 +102,7 @@ function showOverview() {
 function showDetails() {
 	overviewContainer.style.display = "none";
 	detailsContainer.style.display = "block";
+	updateCharts();
 }
 
 function showPlantSelector() {
@@ -90,24 +114,24 @@ function hidePlantSelector() {
 }
 
 
-function updateCharts(){
-	var chart = document.getElementById("chart_container");
-	chart.highcharts({
+function highlightClick(div) {
+	div.style.backgroundColor = "#0C3";
+	window.setTimeout(function(){
+		div.style.backgroundColor = "#FFF";
+	},500);
+}
+
+function updateCharts() {
+	$('#stats_container').highcharts({
         title: {
-            text: 'Monthly Average Temperature',
-            x: -20 //center
+            text: 'Temperature'
         },
-        subtitle: {
-            text: 'Source: WorldClimate.com',
-            x: -20
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
+        
         yAxis: {
+            min: 15,
+            max: 25,
             title: {
-                text: 'Temperature (°C)'
+                text: ''
             },
             plotLines: [{
                 value: 0,
@@ -115,19 +139,10 @@ function updateCharts(){
                 color: '#808080'
             }]
         },
-        tooltip: {
-            valueSuffix: '°C'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
         series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }
-        ]
+        	showInLegend: false,
+            name: '',
+            data: temperature_array
+        }]
     });
 }
