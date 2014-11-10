@@ -177,7 +177,7 @@ header {
 }
 
 #content_detail #stats {
-	height: 200px;
+	height: 400px;
 	overflow: hidden;
 	-webkit-transition: all 1s ease;
 	-moz-transition: all 1s ease;
