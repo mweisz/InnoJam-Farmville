@@ -167,7 +167,7 @@ function updateCharts() {
         },
 
         yAxis : {
-        	min: 15,
+        	min: 20,
         	max: 30
         },
 
