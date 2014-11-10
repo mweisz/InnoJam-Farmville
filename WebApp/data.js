@@ -13,7 +13,7 @@ var ENDPOINT_FERTILIZE_FIELD = API_ENDPOINT + "fertilizeField";
 var ENDPOINT_HARVEST_FIELD = API_ENDPOINT + "harvestField";
 
 // Sensor Data
-var ENDPOINT_TEMPERATURE = API_ENDPOINT + "temperature";
+var ENDPOINT_TEMPERATURES = API_ENDPOINT + "temperatures";
 var ENDPOINT_WETTNESS = API_ENDPOINT + "wettness";
 var ENDPOINT_BRIGHTNESS = API_ENDPOINT + "brightness";
 var ENDPOINT_PHOTO = API_ENDPOINT + "photo";
@@ -27,8 +27,8 @@ var allFields;
 var field;
 var plantInField;
 
-var temperature;
-var temperature_array = [20,20,21,20,20 ,22,21,21,21,20];
+var temperatures;
+var temperatures_array;
 var wettness;
 var brightness;
 var photo;
@@ -65,7 +65,6 @@ function waterField(fieldId){
 function turnLightsOn(fieldId){
     var url = ENDPOINT_LIGHTS_ON;
     httpGet(url);
-
 }
 
 function turnLightsOff(fieldId){
@@ -86,19 +85,23 @@ function harvestField(fieldId){
 
 
 // Sensor Data
-function getTemperature(fieldId) {
-    var url = ENDPOINT_TEMPERATURE + "?fieldId=" + fieldId;
+function getTemperatures(fieldId) {
+    var url = ENDPOINT_TEMPERATURES + "?fieldId=" + fieldId;
     var result = httpGet(url);
-    temperature = JSON.parse(result);
+    temperatures = JSON.parse(result);
 
 
-
-    for(var i = 0; i < temperature.length(); i++){
-        temperature_array.add(temperature[i].value);
+    temperatures_array = new Array();
+    for(var i = 0; i < temperatures.length; i++){
+        temperatures_array.push(temperatures[i].VALUE);
     }
 
 }
-
+function getWettness(fieldId){
+    var url = ENDPOINT_WETTNESS + "?fieldId=" + fieldId;
+    var result = httpGet(url);
+    wettness = JSON.parse(result);
+}
 
 function getWettness(fieldId){
     var url = ENDPOINT_WETTNESS + "?fieldId=" + fieldId;
