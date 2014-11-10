@@ -177,7 +177,17 @@ header {
 }
 
 #content_detail #stats {
-	padding: 10px;
+	height: 200px;
+	overflow: hidden;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+#stats_container {
+	height: 100%;
 }
 
 #content_detail #actions {
@@ -204,6 +214,11 @@ header {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: contain;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	transition: all 0.5s ease;
 }
 
 .action_item .text {
@@ -225,11 +240,11 @@ header {
 	background-color: rgba(255, 255, 255, 0.9);
 	-webkit-border-radius: 20px;
 	border-radius: 20px;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	transition: all 0.5s ease;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	transition: all 1s ease;
 }
 
 #content_select_plant #plants {
