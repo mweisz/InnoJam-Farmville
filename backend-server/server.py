@@ -54,45 +54,9 @@ app = Flask(__name__)
 
 HANA_URL = "http://54.77.126.96:5005"
 
-# class HANA:
-# 	HOST = '23.23.134.136'
-# 	PASSWORD = 'CodeJam2014'
-# 	PORT = 30015
-# 	USER = 'CODEJAMMER'
-
-# url = 'jdbc:sap://%s:%s' %(HANA.HOST, HANA.PORT)
-
-# def connect():
-# 	return jaydebeapi.connect(
-# 		'com.sap.db.jdbc.Driver',
-# 		[url, HANA.USER, HANA.PASSWORD],
-# 		'ngdbc.jar')
-
-# def getDataFromDb(sql, params):
-# 	con = connect()
-# 	cur = con.cursor()
-# 	if params:
-# 		cur.execute(sql, params)
-# 	else:
-# 		cur.execute(sql)
-# 	columns = [desc[0] for desc in cur.description]
-# 	result = []
-# 	for row in cur.fetchall():
-# 		row = dict(zip(columns, row))
-# 		result.append(row)
-# 	return result
-
-# def transactionDB(sql, params):
-# 	con = connect()
-# 	cur = con.cursor()
-# 	if params:
-# 		cur.execute(sql, params)
-# 	else:
-# 		cur.execute(sql)
-
 def dbRequest(sql):
 	payload = {'query': sql}
-	requests.get(HANA_URL, params=payload)
+	result = requests.get(HANA_URL, params=payload)
 	return result.json()
 
 def dbPost(sql):
@@ -153,6 +117,15 @@ def getPlantInField():
 @app.route('/innojam/temperature')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getTemperature():
+	fieldID = request.args.get('fieldId', '')
+	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature' ORDER BY TIME DESC LIMIT 1"
+	print sql
+	result = dbRequest(sql)
+	return Response(json.dumps(result),  mimetype='application/json')
+
+@app.route('/innojam/temperatures')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def getTemperatures():
 	fieldID = request.args.get('fieldId', '')
 	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature'"
 	print sql
