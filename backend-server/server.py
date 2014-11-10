@@ -101,26 +101,6 @@ def getField():
 	result = dbRequest(sql)
 	return Response(json.dumps(result[0]),  mimetype='application/json')
 
-@app.route('/innojam/photo')
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def getPhoto():
-	# fieldID = request.args.get('fieldId', '')
-	# sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.PLANTS WHERE FIELDID = ? AND EVENT = 'Light'"
-	# result = getDataFromDb(sql, fieldID)
-	# return Response(json.dumps(result),  mimetype='application/json')
-	return "Photo"
-
-@app.route('/innojam/postPhoto', methods=["POST"])
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def setPhoto():
-	if request.method == 'POST':
-		file = request.files['file']
-		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			# return redirect(url_for('uploaded_file',filename=filename))
-	return "Photo"
-
 @app.route('/innojam/plantInField')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getPlantInField():
