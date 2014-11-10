@@ -119,7 +119,6 @@ def getPlantInField():
 def getTemperature():
 	fieldID = request.args.get('fieldId', '')
 	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature' ORDER BY TIME DESC LIMIT 1"
-	print sql
 	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
@@ -128,7 +127,6 @@ def getTemperature():
 def getTemperatures():
 	fieldID = request.args.get('fieldId', '')
 	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature'"
-	print sql
 	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
