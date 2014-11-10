@@ -140,21 +140,28 @@ def getWettness():
 	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
+@app.route('/innojam/toggleLights')
+@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
+def toggleLights():
+	sql = "SELECT VALUE FROM FARMVILLE.EVENTS WHERE EVENT = 'Light' ORDER BY TIME DESC LIMIT 1"
+	result = dbRequest(sql)
+	light = result[0]["VALUE"]
+	newLight = 1 if light == 0 else 0
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light','" + str(datetime.datetime.now()) + "'," + str(newLight) + ")"
+	dbPost(sql)
+	return "Toggled Lights"
+
 @app.route('/innojam/turnLightsOff')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def turnLightsOff():
-	sql = "UPDATE FARMVILLE.LIGHT SET ISON = 0"
-	dbPost(sql)
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light'," + str(datetime.datetime.now()) + ",0)"
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light','"+ str(datetime.datetime.now()) + "',0)"
 	dbPost(sql)
 	return "Turned lights off"
 
 @app.route('/innojam/turnLightsOn')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def turnLightsOn():
-	sql = "UPDATE FARMVILLE.LIGHT SET ISON = 1"
-	dbPost(sql)
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light'," + str(datetime.datetime.now()) + ",1)"
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light','" + str(datetime.datetime.now()) + "',1)"
 	dbPost(sql)
 	return "Turned lights on"
 
