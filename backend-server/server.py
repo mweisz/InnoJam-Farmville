@@ -126,7 +126,7 @@ def getTemperature():
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def getTemperatures():
 	fieldID = request.args.get('fieldId', '')
-	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature'"
+	sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.EVENTS WHERE FIELDID = " + str(fieldID) + " AND EVENT = 'Temperature' ORDER BY TIME DESC LIMIT 50"
 	result = dbRequest(sql)
 	return Response(json.dumps(result),  mimetype='application/json')
 
