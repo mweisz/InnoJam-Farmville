@@ -165,9 +165,11 @@ def turnLightsOn():
 	dbPost(sql)
 	return "Turned lights on"
 
-@app.route('/innojam/waterField', methods=['POST'])
+@app.route('/innojam/waterField')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def waterField():
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Water','" + str(datetime.datetime.now()) + "',100)"
+	dbPost(sql)
 	return "Watered Field"
 
 
