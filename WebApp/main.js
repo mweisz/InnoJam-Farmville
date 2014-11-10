@@ -54,7 +54,7 @@ function setClickListeners() {
 	}
 
 	document.getElementById("action_lights").onclick = function() {
-	    turnLightsOn();
+	    toggleLights();
 		highlightClick(document.getElementById("action_lights").children[0]);
 	}
 	
@@ -76,7 +76,7 @@ function setClickListeners() {
 	document.getElementById("action_stats").onclick = function() {
 		highlightClick(document.getElementById("action_stats").children[0]);
 	    if (statsContainer.offsetHeight < 100) {
-	    	statsContainer.style.height = "200px";
+	    	statsContainer.style.height = "400px";
 	    } else {
 	    	statsContainer.style.height = "0px";
 	    }
@@ -122,27 +122,69 @@ function highlightClick(div) {
 }
 
 function updateCharts() {
-	$('#stats_container').highcharts({
-        title: {
-            text: 'Temperature'
+    Highcharts.setOptions({
+        global : {
+            useUTC : false
+        }
+    });
+
+    // Create the chart
+    $('#stats_container').highcharts('StockChart', {
+        chart : {
+            events : {
+                load : function () {
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    setInterval(function () {
+                        var x = (new Date()).getTime(); // current time
+                        var y = getLastTemperature();
+                        series.addPoint([x, y], true, true);
+                        getTemperatures();
+                    }, 1000);
+                }
+            }
         },
-        
-        yAxis: {
-            min: 15,
-            max: 25,
-            title: {
-                text: ''
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
+
+        rangeSelector: {
+            buttons: [{
+                count: 1,
+                type: 'minute',
+                text: '1M'
+            }, {
+                count: 5,
+                type: 'minute',
+                text: '5M'
+            }, {
+                type: 'all',
+                text: 'All'
+            }],
+            inputEnabled: false,
+            selected: 0
         },
-        series: [{
-        	showInLegend: false,
-            name: '',
-            data: temperature_array
+
+        title : {
+            text : 'Live temperature'
+        },
+
+        yAxis : {
+        	min: 15,
+        	max: 30
+        },
+
+		navigator : {
+            enabled : true
+        },
+
+        exporting: {
+            enabled: false
+        },
+
+        series : [{
+            name : '',
+            data : (function () {
+            	var value = temperatures_array[0];
+            	return new Array(value, value, value, value, value, value, value, value, value, value, value, value, value, value, value);
+            }())
         }]
     });
 }
