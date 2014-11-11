@@ -22,6 +22,8 @@ var ENDPOINT_PHOTO = API_ENDPOINT + "photo";
 // Stuff
 var ENDPOINT_ALL_AVAILABLE_PLANTS = API_ENDPOINT + "allAvailablePlants";
 
+var ENDPOINT_PHOTO = "https://dl.dropboxusercontent.com/u/272588/reduceFile.jpg";
+
 var DEFAULT_FIELD_ID = 1;
 
 var allFields;

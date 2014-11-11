@@ -27,7 +27,9 @@ function init() {
 
 	updateCharts();
 
-	debug();
+	statsContainer.style.height = "0px";
+
+	//debug();
 }
 
 function debug() {
@@ -81,7 +83,7 @@ function setClickListeners() {
 	    	statsContainer.style.height = "0px";
 	    }
 	}
-	
+
 }
 
 function animateContent() {
@@ -121,6 +123,19 @@ function highlightClick(div) {
 	},500);
 }
 
+function updatePhoto() {
+	console.log("Updating photo");
+	var photo, photo_old;
+	photo = document.getElementById("photo");
+	photo_old = document.getElementById("photo_old");
+
+	
+	photo_old.style.backgroundImage = "url('" + ENDPOINT_PHOTO + "?" + new Date().getTime() + "')";
+	window.setTimeout(function(){
+		photo.style.backgroundImage = photo_old.style.backgroundImage;
+	},700);
+}
+
 function updateCharts() {
     Highcharts.setOptions({
         global : {
@@ -140,7 +155,7 @@ function updateCharts() {
                         var y = getLastTemperature();
                         series.addPoint([x, y], true, true);
                         getTemperatures();
-                    }, 1000);
+                    }, 3000);
                 }
             }
         },

@@ -69,6 +69,7 @@ void loop()
 void motorOnThenOff()
 {
   int onTime = 1000;  // milliseconds to turn the motor on
+  //analogWrite(motorPin, 200);
   digitalWrite(motorPin, HIGH); // turn the motor on (full speed)
   delay(onTime);                // delay for onTime milliseconds
   digitalWrite(motorPin, LOW);  // turn the motor off

@@ -50,9 +50,13 @@ import json
 from flask import Flask, request, Response
 import urllib2
 import requests
-app = Flask(__name__)
 
+UPLOAD_FOLDER = './img'
+ALLOWED_EXTENSIONS = set(['jpg'])
 HANA_URL = "http://54.77.126.96:5005"
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def dbRequest(sql):
 	payload = {'query': sql}
@@ -96,15 +100,6 @@ def getField():
 	sql = "SELECT ID, X, Y FROM FARMVILLE.FIELD WHERE ID = " + str(fieldID)
 	result = dbRequest(sql)
 	return Response(json.dumps(result[0]),  mimetype='application/json')
-
-@app.route('/innojam/photo')
-@crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
-def getPhoto():
-	# fieldID = request.args.get('fieldId', '')
-	# sql = "SELECT ID, FIELDID, PLANT, EVENT, TIME, VALUE FROM FARMVILLE.PLANTS WHERE FIELDID = ? AND EVENT = 'Light'"
-	# result = getDataFromDb(sql, fieldID)
-	# return Response(json.dumps(result),  mimetype='application/json')
-	return "Photo"
 
 @app.route('/innojam/plantInField')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
