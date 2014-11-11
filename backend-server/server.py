@@ -140,28 +140,28 @@ def toggleLights():
 	result = dbRequest(sql)
 	light = result[0]["VALUE"]
 	newLight = 1 if light == 0 else 0
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light','" + str(datetime.datetime.now()) + "'," + str(newLight) + ")"
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Tomato','Light','" + str(datetime.datetime.now()) + "'," + str(newLight) + ")"
 	dbPost(sql)
 	return "Toggled Lights"
 
 @app.route('/innojam/turnLightsOff')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def turnLightsOff():
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light','"+ str(datetime.datetime.now()) + "',0)"
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Tomato','Light','"+ str(datetime.datetime.now()) + "',0)"
 	dbPost(sql)
 	return "Turned lights off"
 
 @app.route('/innojam/turnLightsOn')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def turnLightsOn():
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Light','" + str(datetime.datetime.now()) + "',1)"
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Tomato','Light','" + str(datetime.datetime.now()) + "',1)"
 	dbPost(sql)
 	return "Turned lights on"
 
 @app.route('/innojam/waterField')
 @crossdomain("*", headers='Origin, X-Requested-With, Content-Type, Accept')
 def waterField():
-	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Lettuce','Water','" + str(datetime.datetime.now()) + "',100)"
+	sql = "INSERT INTO FARMVILLE.EVENTS VALUES(4,1,'Tomato','Water','" + str(datetime.datetime.now()) + "',100)"
 	dbPost(sql)
 	return "Watered Field"
 
