@@ -47,7 +47,7 @@ class ArduinoController(object):
 
 
 # HANA_URL = 'http://54.77.126.96:5005'
-HANA_URL = 'http://213.165.85.254:5005'
+HANA_URL = 'http://217.160.126.98:5005'
 
 
 def query(q_str):

@@ -53,7 +53,7 @@ import requests
 UPLOAD_FOLDER = './img'
 ALLOWED_EXTENSIONS = set(['jpg'])
 # HANA_URL = "http://54.77.126.96:5005"
-HANA_URL = "http://213.165.85.254:5005"
+HANA_URL = "http://217.160.126.98:5005"
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
