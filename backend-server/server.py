@@ -43,7 +43,6 @@ def crossdomain(origin=None, methods=None, headers=None,
         return update_wrapper(wrapped_function, f)
     return decorator
 
-import jaydebeapi
 import os
 import datetime
 import json
@@ -53,7 +52,8 @@ import requests
 
 UPLOAD_FOLDER = './img'
 ALLOWED_EXTENSIONS = set(['jpg'])
-HANA_URL = "http://54.77.126.96:5005"
+# HANA_URL = "http://54.77.126.96:5005"
+HANA_URL = "http://213.165.85.254:5005"
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

@@ -46,7 +46,8 @@ class ArduinoController(object):
 
 
 
-HANA_URL = 'http://54.77.126.96:5005'
+# HANA_URL = 'http://54.77.126.96:5005'
+HANA_URL = 'http://213.165.85.254:5005'
 
 
 def query(q_str):
@@ -71,7 +72,7 @@ def query(q_str):
 
 
 if __name__ == '__main__':
-    ardu = ArduinoController(serial.Serial('/dev/tty.usbmodem1451', 9600))
+    ardu = ArduinoController(serial.Serial('/dev/tty.usbmodem1411', 9600))
     last_update = 0
     last_light = ''
     last_water = ''
